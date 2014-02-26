@@ -9,7 +9,7 @@ import time
 import json
 import re
 import xml.etree.ElementTree as ET
-__ALL__ = ['Film', 'Xml', ]
+__ALL__ = ['Film', 'Xml','List', ]
 url=r"movie.zzti.edu.cn";
 class Film:
     def __init__(self, film):
@@ -55,7 +55,6 @@ class Xml:
 		f.close()
 
 	def updatexml(self):
-		# pdb.set_trace()
 		if os.path.exists(self.cache_file):
 			mtime=os.path.getmtime(self.cache_file)
 			now_time=time.time()
@@ -93,9 +92,11 @@ class Xml:
 		            break
 		return result
 class List:
+	list_num=None
 	def __init__(self,code):
 		self.code=code
 		self.list_url='/mov/'+code+'/url.xml'
+		self.readlist(self.getlist())
 	def getlist(self):
 		xml=Xml.getxml(self,self.list_url)
 		return xml
@@ -103,9 +104,17 @@ class List:
 		data=xml.decode(encoding='gb18030',errors='replace')
 		root = ET.fromstring(data)
 		f=Film(root)
-		# f.code=f.code.replace("\n","")
 		codes=re.findall("^[a-zA-Z0-9].*[a-zA-Z0-9]",f.code,re.MULTILINE)
-		# pdb.set_trace()
 		f.code=codes
+		self.list_num=len(codes)
 		return f
+	def getdown(self,id):
+		if self.list_num:
+			if self.list_num<int(id):
+				return None
+		self.down_url='/xy_path.asp?a='+id+'&b='+self.code
+		xml=Xml.getxml(self,self.down_url)
+		data=xml.decode(encoding='gb18030',errors='replace')
+		item_url=re.split(re.escape("|||"),data)
+		return item_url
 
