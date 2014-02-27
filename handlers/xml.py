@@ -42,7 +42,7 @@ class Xml:
 
 	def getxml(self,path):
 		conn = http.client.HTTPConnection(url)
-		conn.request("GET",path)
+		conn.request("GET",self.path)
 		response=conn.getresponse()
 		xml=response.read()
 		conn.close()
@@ -59,9 +59,9 @@ class Xml:
 			mtime=os.path.getmtime(self.cache_file)
 			now_time=time.time()
 			if now_time-mtime>86400:
-				self.savexml(self.getxml())
+				self.savexml(self.getxml(self.path))
 		else:
-			self.savexml(self.getxml())
+			self.savexml(self.getxml(self.path))
 	def readxml(self):
 		films=[]
 		f = codecs.open(self.cache_file, mode='r', encoding='utf8')

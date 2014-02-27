@@ -12,7 +12,6 @@ class IndexHandler(BaseHandler):
     def get(self):
     	# self.post()
     	self.render("index.html", title=site_config['title'])
-    	self.finish()
     def post(self):
     	key=self.get_argument('key','')
     	x=Xml()
