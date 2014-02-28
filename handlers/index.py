@@ -10,7 +10,6 @@ site_config = {
 }
 class IndexHandler(BaseHandler):
     def get(self):
-    	# self.post()
     	self.render("index.html", title=site_config['title'])
     def post(self):
     	key=self.get_argument('key','')
@@ -23,18 +22,22 @@ class IndexHandler(BaseHandler):
     	self.write(x.getJSON(data))
     	self.finish()
 class ListHandler(BaseHandler):
-	def get(self):
-		self.post()
-	def post(self):
-		code=self.get_argument('code','')
-		if code=='':
-			self.write("Please input code")
-			self.finish()
-		else:
-			l=List(code)
-			f=l.readlist(l.getlist())
-			self.write(f.__dict__)
-			self.finish()
+    def get(self):
+        self.render("list.html",title=site_config['title'])
+        # self.post()
+    def post(self):
+        code=self.get_argument('code','')
+        if code=='':
+            self.write("Please input code")
+            self.finish()
+        else:
+            l=List(code)
+            f=l.getdesc()
+            self.set_header("Access-Control-Allow-Origin", "*")
+            self.set_header("Content-Type", "application/json")
+            self.write(l.getJSON(f))
+            self.finish()
+
 class ItemHandler(BaseHandler):
     def get(self):
         self.post()

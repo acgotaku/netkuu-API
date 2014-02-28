@@ -31,7 +31,11 @@ class Film:
                 self.desc.append(item.text)
             elif item.tag=="g":
                 self.desc.append(item.text)
+            elif item.tag=="h":
+                self.desc.append(item.text)                
             elif item.tag=="s":
+                self.desc.append(item.text)
+            elif item.tag=="t":
                 self.desc.append(item.text)
 
 class Xml:
@@ -42,7 +46,7 @@ class Xml:
 
 	def getxml(self,path):
 		conn = http.client.HTTPConnection(url)
-		conn.request("GET",self.path)
+		conn.request("GET",path)
 		response=conn.getresponse()
 		xml=response.read()
 		conn.close()
@@ -91,12 +95,51 @@ class Xml:
 		            result.append(film)
 		            break
 		return result
+class Item:
+	def __init__(self,film):
+		for item in film:
+			if item.tag=="name":
+				self.name=item.text
+			elif item.tag=="director":
+				self.director=item.text
+			elif item.tag=="actor":
+				self.actor=item.text
+			elif item.tag=="channelid":
+				self.type=item.text
+			elif item.tag=="region":
+				self.region=item.text
+			elif item.tag=="publishTime":
+				self.publishTime=item.text
+			elif item.tag=="adddate":
+				self.adddate=item.text
+			elif item.tag=="brief":
+				text=re.sub("(\#+)([a-zA-Z0-9]{3,5});","",item.text)
+				self.brief=text
+
 class List:
 	list_num=None
 	def __init__(self,code):
 		self.code=code
 		self.list_url='/mov/'+code+'/url.xml'
-		self.readlist(self.getlist())
+		self.desc_url='/mov/'+code+'/film.xml'
+		self.getfilm()
+	def getdesc(self):
+		xml=Xml.getxml(self,self.desc_url)
+		data=xml.decode(encoding='gb18030',errors='replace')
+		root = ET.fromstring(data)
+		f=Item(root)
+		return f
+	def getJSON(self,f):
+		json_string = json.dumps(f.__dict__)
+		return json_string
+	def getfilm(self):
+		x=Xml()
+		films=x.readxml()
+		for film in films:
+			if(film.code==self.code):
+				self.list_num=int(film.desc[5])
+				return film
+		return None
 	def getlist(self):
 		xml=Xml.getxml(self,self.list_url)
 		return xml
@@ -106,7 +149,6 @@ class List:
 		f=Film(root)
 		codes=re.findall("^[a-zA-Z0-9].*[a-zA-Z0-9]",f.code,re.MULTILINE)
 		f.code=codes
-		self.list_num=len(codes)
 		return f
 	def getdown(self,id):
 		if self.list_num:

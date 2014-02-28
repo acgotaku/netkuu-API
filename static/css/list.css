@@ -1,0 +1,10 @@
+body {
+  padding-top: 60px;
+}
+#desc div{
+	margin-bottom: 10px;
+}
+
+.item-brief{
+	text-indent: 2em;
+}

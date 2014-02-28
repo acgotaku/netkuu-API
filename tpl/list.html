@@ -1,0 +1,31 @@
+{% autoescape None %}<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>{{ title }}</title>
+  <link rel="stylesheet" href="{{ static_url("css/bootstrap.min.css") }}" type="text/css">
+  <link rel="stylesheet" href="{{ static_url("css/animation.css") }}" type="text/css">
+  <link rel="stylesheet" href="{{ static_url("css/list.css") }}" type="text/css"></head>
+<body>
+  {% include "header.html" %}
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4">
+        <img  class="cover"></div>
+      <div class="col-lg-6" id="desc">
+        <div class="item-name"></div>
+        <div class="item-director"><span >导演:</span></div>
+        <div class="item-actor"><span >主演:</span></div>
+        <div class="item-type"><span >类型:</span></div>
+        <div class="item-region"><span >地区:</span></div>
+        <div class="item-publishTime"><span >上映时间:</span></div>
+        <div class="item-adddate"><span >更新时间:</span></div>
+        <div class="item-brief"></div>
+      </div>
+    </div>
+  </div>
+  <script src="{{ static_url("js/jquery-2.1.0.min.js") }}"></script>
+  <script src="{{ static_url("js/bootstrap.min.js") }}"></script>
+  <script src="{{ static_url("js/list.js") }}"></script>
+</body>
+</html>
