@@ -147,8 +147,9 @@ class List:
 		data=xml.decode(encoding='gb18030',errors='replace')
 		root = ET.fromstring(data)
 		f=Film(root)
-		codes=re.findall("^[a-zA-Z0-9].*[a-zA-Z0-9]",f.code,re.MULTILINE)
-		f.code=codes
+		f.code=f.code.replace("\n","")
+		codes=re.split(',',f.code)
+		f.code=codes[:-1]
 		return f
 	def getdown(self,id):
 		if self.list_num:

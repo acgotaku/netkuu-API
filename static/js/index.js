@@ -10,10 +10,10 @@ $(function(){
 					dataType:'json',
 					data:{key:key},
 					success:(function(data){
-						$(".list-group li:not(:first)").remove();
+						$("#result .list-group li:not(:first)").remove();
 						$.each(data,function(n,e){
 							window.setTimeout(function(){
-								$(".list-group").append($("<li>").addClass("list-group-item a-fadein").append($("<a>").addClass("item-name").attr("href","list?code="+e.code).attr("target","_blank").text(e.name)).append(
+								$("#result .list-group").append($("<li>").addClass("list-group-item a-fadein").append($("<a>").addClass("item-name").attr("href","list?code="+e.code).attr("target","_blank").text(e.name)).append(
 									$("<div>").addClass("item-desc").append($("<span>").text(e.desc[6]))
 									).append(
 									$("<div>").addClass("item-type").append($("<span>").text(e.desc[4]))

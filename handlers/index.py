@@ -27,16 +27,25 @@ class ListHandler(BaseHandler):
         # self.post()
     def post(self):
         code=self.get_argument('code','')
+        item=self.get_argument('item','False')
         if code=='':
             self.write("Please input code")
             self.finish()
-        else:
+        elif item=='False':
             l=List(code)
             f=l.getdesc()
             self.set_header("Access-Control-Allow-Origin", "*")
             self.set_header("Content-Type", "application/json")
             self.write(l.getJSON(f))
             self.finish()
+        else:
+            l=List(code)
+            f=l.readlist(l.getlist())
+            self.set_header("Access-Control-Allow-Origin", "*")
+            self.set_header("Content-Type", "application/json")
+            self.write(l.getJSON(f))
+            self.finish()    
+
 
 class ItemHandler(BaseHandler):
     def get(self):
@@ -50,7 +59,9 @@ class ItemHandler(BaseHandler):
         else:
             i=List(code)
             url=i.getdown(num)
-            self.write(str(url))
+            self.set_header("Access-Control-Allow-Origin", "*")
+            # self.set_header("Content-Type", "application/x-gzip")
+            self.write(str(url[1]))
             self.finish()
 
 handlers = [
