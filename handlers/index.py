@@ -4,6 +4,7 @@
 
 from .base import *
 from .xml import *
+from .server import *
 site_config = {
     "title" : "安师大校园网视频下载!",
     "url" : """http://netkuu.icehoney.me""",
@@ -49,7 +50,7 @@ class ListHandler(BaseHandler):
 
 class ItemHandler(BaseHandler):
     def get(self):
-        self.post()
+        self.render("item.html",title=site_config['title'])
     def post(self):
         num=self.get_argument('num','')
         code=self.get_argument('code','')
@@ -63,9 +64,19 @@ class ItemHandler(BaseHandler):
             # self.set_header("Content-Type", "application/x-gzip")
             self.write(str(url[1]))
             self.finish()
-
+class ServerHandler(BaseHandler):
+    def get(self):
+        self.post()
+    def post(self):
+        s=ServerList()
+        data=s.readlist()
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header("Content-Type", "application/json")
+        self.write(s.getJSON(data))
+        self.finish()
 handlers = [
         (r'/', IndexHandler),
         (r'/list',ListHandler),
-        (r'/item',ItemHandler)
+        (r'/item',ItemHandler),
+        (r'/server',ServerHandler)
         ]
