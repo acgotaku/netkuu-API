@@ -12,7 +12,7 @@ body {
 .item-brief{
 	text-indent: 2em;
 }
-.col-lg-11 button{
+.col-lg-11 a{
 	margin: 3px;
 }
 button>a{

@@ -64,7 +64,7 @@ $(function(){
 							num=1;
 						}
 						$.each(data.code,function(n,e){
-						 	var item=$("<button>").addClass("btn btn-default").append($("<a>").attr("href","item?code="+code+"&num="+n).attr("target","_blank").text(list.printf(parseInt(num)+n)));
+						 	var item=$("<a>").addClass("btn btn-default").attr("href","item?code="+code+"&num="+n).attr("target","_blank").text(list.printf(parseInt(num)+n));
 						 	if (e==""){
 						 		item.attr("disabled","disabled");
 						 	}

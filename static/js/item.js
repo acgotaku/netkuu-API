@@ -14,14 +14,17 @@ $(function(){
 						}
 						var array=data.split(".");
 						var file_type=array[array.length-1];
-						var file_name=header.getCookie("fname")+"第"+header.getCookie("num")+"集";
-						$(".middle a").text(file_name).attr("href",down_url).attr("download",file_name+"."+file_type);
+						var num=header.getCookie("num");
+						var file_name="视频."+file_type;
+						if(num!=""){
+							file_name=header.getCookie("fname")+"第"+header.getCookie("num")+"集"+"."+file_type;
+						}
+						$(".middle a").text(file_name).attr("href","data:Application/octet-stream,"+down_url).attr("download",file_name);
 						})
 					
 				});
 			setTimeout(function(){
 				$(".middle a").trigger("click");
-				console.log("a");
 			},3000);
 		}
 	
