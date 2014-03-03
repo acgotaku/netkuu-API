@@ -19,7 +19,7 @@ $(function(){
 						if(num!=""){
 							file_name=header.getCookie("fname")+"第"+header.getCookie("num")+"集"+"."+file_type;
 						}
-						$(".middle a").text(file_name).attr("href","data:Application/octet-stream,"+down_url).attr("download",file_name);
+						$(".middle a").text(file_name).attr("href",down_url).attr("download",file_name);
 						})
 					
 				});

@@ -69,8 +69,8 @@ $(function(){
 						 		item.attr("disabled","disabled");
 						 	}
 						 	item.click(function(){
-						 		header.setCookie("num",$(this).text());
-						 		header.setCookie("fname",$(".item-name h2").text());
+						 		header.setCookie("num",$(this).text(),1);
+						 		header.setCookie("fname",$(".item-name h2").text(),1);
 						 	});
 						 	$(".col-lg-11").append(item);
 						 });

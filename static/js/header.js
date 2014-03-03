@@ -11,9 +11,9 @@
 					success:(function(data){
 						$.each(data,function(n,e){
 							$(".modal-body .list-group").append($("<a>").addClass("list-group-item a-fadein").text(e.name).attr("url",e.url).attr("href","javascript:void(0);").click(function(){
-								header.setCookie("server",$(this).attr("url"));
+								header.setCookie("server",$(this).attr("url"),360);
 								$("#schoolName").text($(this).text());
-								header.setCookie("name",$(this).text());
+								header.setCookie("name",$(this).text(),360);
 								$('#myModal').modal('hide');
 							}));
 						});
@@ -23,9 +23,9 @@
 
 
 		},
-		setCookie:function(name,value){
+		setCookie:function(name,value,days){
 			var d=new Date();
-			d.setTime(d.getTime()+(360*24*60*60*1000));
+			d.setTime(d.getTime()+(parseInt(days)*60*60*1000));
 			var expires = "expires="+d.toGMTString();
 			value=encodeURIComponent(value)
 			document.cookie=name+"="+value+";"+expires;
