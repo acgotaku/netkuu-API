@@ -180,11 +180,15 @@ class ServerList(Xml):
         Xml.__init__(self,path,cache_file,url,coding)
         self.updatexml()
     def readlist(self):
-        f = codecs.open(self.cache_file, mode='r', encoding='utf8')
+        servers=[]
+        if os.path.exists(self.cache_file):
+            f = codecs.open(self.cache_file, mode='r', encoding='utf8')
+        else:
+            return servers
         data=f.read()
         f.close()
         root = ET.fromstring(data)
-        servers=[]
+        
         for child in root:
             server=child.getchildren()
             s=ServerXml(server)
