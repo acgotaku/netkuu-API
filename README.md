@@ -1,6 +1,3 @@
-netkuu-API
-========
-
 #校园视频API
 
 本API全部为POST方式调用,GET方法为本人写的DEMO.可以进行参考.由于设置了Access-Control-Allow-Origin属性为ALL,
