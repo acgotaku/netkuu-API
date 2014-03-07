@@ -95,11 +95,11 @@ list页面有两个API,一个是返回搜索结果条目的描述信息,一个�
 
  如果需要配图的话,每个条目的图片可以使用 `http://movie.zzti.edu.cn/mov/+code+1.jpg` 获取.
 
- ##item页面API
+##item页面API
 
  item页面是返回每集的具体下载地址,接受两个参数,一个是code一个是num,num代表是第几集,起始从0开始,
  所以第一集的话num要传值为0.这次返回的只是纯文本的地址了.
 
- ##server页面API
+##server页面API
  如果你做的客户端想支持很多学校的话,可以使用server页面,server页面返回学校列表,也是一个JSON数组,
  每个对象有name和 url键值对.只要在下载地址处进行替换便可轻松支持很多学校.
