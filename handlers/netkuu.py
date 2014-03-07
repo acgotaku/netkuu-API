@@ -156,6 +156,7 @@ class List(Xml):
         f.code=f.code.replace("\n","")
         codes=re.split(',',f.code)
         f.code=codes[:-1]
+        # pdb.set_trace()
         return f
 class Item(Xml):
     def __init__(self,code,num,url="movie.zzti.edu.cn",coding="gb18030"):
