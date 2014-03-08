@@ -100,7 +100,9 @@ class Xml:
         t.daemon = True
         t.start()
     def getJSON(self,data):
-        json_string=""
+        json_string="[]"
+        if data is None:
+            return json_string
         if type(data).__name__=="list":
             json_string = json.dumps([item.__dict__ for item in data])
         else:
@@ -117,7 +119,10 @@ class Search(Xml):
         else:
             return films
         data=f.read()
-        root = ET.fromstring(data)
+        try:
+            root = ET.fromstring(data)
+        except:
+            return None
         f.close()
         for child in root:
             film=child.getchildren()
@@ -151,13 +156,19 @@ class List(Xml):
     def getdesc(self):
         xml=self.getxml(self.desc_url)
         data=xml.decode(encoding=self.coding,errors='replace')
-        root = ET.fromstring(data)
+        try:
+            root = ET.fromstring(data)
+        except:
+            return None
         desc=Film(root)
         return desc
     def getlist(self):
         xml=self.getxml(self.list_url)
         data=xml.decode(encoding=self.coding,errors='replace')
-        root = ET.fromstring(data)
+        try:
+            root = ET.fromstring(data)
+        except:
+            return None
         f=FilmList(root)
         f.__delattr__("desc")
         f.code=f.code.replace("\n","")
@@ -188,8 +199,10 @@ class ServerList(Xml):
             return servers
         data=f.read()
         f.close()
-        root = ET.fromstring(data)
-        
+        try:
+            root = ET.fromstring(data)
+        except:
+            return None  
         for child in root:
             server=child.getchildren()
             s=ServerXml(server)

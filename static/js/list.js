@@ -33,6 +33,8 @@ $(function(){
 					i=i+1;
 				}
 				var url=decodeURIComponent(tempstr);
+			}else{
+				return 0;
 			}
 			num=url.match(/\#\#(\d+)/i);
 			if (num){
@@ -59,6 +61,9 @@ $(function(){
 					dataType:'json',
 					data:{code:code,item:"True"},
 					success:(function(data){
+						if (data.length==0){
+							$(".col-lg-11").append($("<h2>").text("服务器没有资源"));
+						}
 						var num=list.num(code);
 						if (num==0){
 							num=1;
