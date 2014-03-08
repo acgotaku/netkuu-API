@@ -36,10 +36,10 @@ $(function(){
 			}
 			num=url.match(/\#\#(\d+)/i);
 			if (num){
-				return num[1]
+				return num[1];
 			}
 			else
-				return 0
+				return 0;
 		},
 		printf:function(num){
 			if(num<10){

@@ -10,6 +10,10 @@ $(function(){
 					dataType:'json',
 					data:{key:key},
 					success:(function(data){
+						if (data.length==0){
+							$('#Msg').modal('show');
+							return ;
+						}	
 						$("#result .list-group li:not(:first)").remove();
 						$.each(data,function(n,e){
 							window.setTimeout(function(){

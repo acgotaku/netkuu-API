@@ -1,9 +1,23 @@
 	var header={
 		init:function(){
+			var run=true;
 			var schoolName=header.getCookie("name");
 			if (schoolName!=""){
 				$("#schoolName").text(schoolName);
+			}else{
+				if(run){
+					header.getServerList();
+					run=false;
+				}
 			}
+			$(".glyphicon").click(function(){
+				if(run){
+					header.getServerList();
+					run=false;
+				}
+			});
+		},
+		getServerList:function(){
 			$.ajax({
 					type:'POST',
 					url:"/server",
@@ -14,14 +28,12 @@
 								header.setCookie("server",$(this).attr("url"),360);
 								$("#schoolName").text($(this).text());
 								header.setCookie("name",$(this).text(),360);
-								$('#myModal').modal('hide');
+								$('#ServerList').modal('hide');
 							}));
 						});
 						})
 					
 				});
-
-
 		},
 		setCookie:function(name,value,days){
 			var d=new Date();

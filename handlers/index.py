@@ -25,7 +25,6 @@ class IndexHandler(BaseHandler):
 class ListHandler(BaseHandler):
     def get(self):
         self.render("list.html",title=site_config['title'])
-        # self.post()
     def post(self):
         code=self.get_argument('code','')
         item=self.get_argument('item','False')

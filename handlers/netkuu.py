@@ -75,6 +75,7 @@ class Xml:
         self.path=path
         self.cache_file=cache_file
         self.coding=coding
+        self.lock=False
     def getxml(self,path):
         conn = http.client.HTTPConnection(self.url)
         conn.request("GET",path)
@@ -84,11 +85,11 @@ class Xml:
         return xml
     def savexml(self,xml,coding):
         data=xml.decode(encoding=coding,errors='replace')
-        time.sleep(5)
-        logging.info("savexml...")
+        self.lock=True
         f=open(self.cache_file,"w")
         f.write(data)
         f.close()
+        self.lock=False
     def updatexml(self):
         if os.path.exists(self.cache_file):
             mtime=os.path.getmtime(self.cache_file)
@@ -111,7 +112,7 @@ class Search(Xml):
         self.updatexml()
     def readxml(self):
         films=[]
-        if os.path.exists(self.cache_file):
+        if os.path.exists(self.cache_file) and not self.lock:
             f = codecs.open(self.cache_file, mode='r', encoding='utf8')
         else:
             return films
@@ -181,7 +182,7 @@ class ServerList(Xml):
         self.updatexml()
     def readlist(self):
         servers=[]
-        if os.path.exists(self.cache_file):
+        if os.path.exists(self.cache_file) and not self.lock:
             f = codecs.open(self.cache_file, mode='r', encoding='utf8')
         else:
             return servers
