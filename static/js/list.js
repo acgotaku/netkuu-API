@@ -5,7 +5,7 @@ $(function(){
 			var str=window.location.search;
 			var code=str.match(/code=([a-zA-Z0-9].*[a-zA-Z0-9])/i);
 			code=code[1]
-			$(".cover").attr("src",this.url+"mov/"+code+"/1.jpg");
+			$(".cover").attr("src",this.url+"mov/"+code+"/1.jpg").attr("width","300px").attr("height","400px");
 			$.ajax({
 					type:'POST',
 					url:"/list",
