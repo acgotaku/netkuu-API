@@ -1,6 +1,4 @@
-body {
-  padding-top: 60px;
-}
+@import "header.css";
 .middle{
 	margin:0 auto ;
 	float: none;

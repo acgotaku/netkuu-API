@@ -5,7 +5,7 @@ import os
 from .base import *
 from .netkuu import *
 site_config = {
-    "title" : "安师大校园网视频下载!",
+    "title" : "校园网视频下载!",
     "url" : """http://netkuu.icehoney.me""",
 }
 class IndexHandler(BaseHandler):
