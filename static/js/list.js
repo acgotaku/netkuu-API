@@ -62,14 +62,14 @@ $(function(){
 					data:{code:code,item:"True"},
 					success:(function(data){
 						if (data.length==0){
-							$(".col-lg-11").append($("<h2>").text("服务器没有资源"));
+							$(".list").append($("<h2>").text("服务器没有资源"));
 						}
 						var num=list.num(code);
 						if (num==0){
 							num=1;
 						}
 						$.each(data.code,function(n,e){
-						 	var item=$("<a>").addClass("btn btn-default").attr("href","item?code="+code+"&num="+n).attr("target","_blank").text(list.printf(parseInt(num)+n));
+						 	var item=$("<a>").attr("href","item?code="+code+"&num="+n).attr("target","_blank").text(list.printf(parseInt(num)+n));
 						 	if (e==""){
 						 		item.attr("disabled","disabled");
 						 	}
@@ -77,7 +77,8 @@ $(function(){
 						 		header.setCookie("num",$(this).text(),1);
 						 		header.setCookie("fname",$(".item-name h2").text(),1);
 						 	});
-						 	$(".col-lg-11").append(item);
+						 	$(".tiny").append(item.clone().addClass("btn btn-default"));
+						 	$("<li>").addClass("list-group-item").append(item.clone()).appendTo($(".list .list-group"));
 						 });
 						})
 					
