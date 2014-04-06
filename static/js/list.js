@@ -12,6 +12,7 @@ $(function(){
 					dataType:'json',
 					data:{code:code},
 					success:(function(data){
+						document.title=data.name;
 						$(".item-name").append($("<h2>").text(data.name));
 						$(".item-director").append($("<span>").text(data.director));
 						$(".item-actor").append($("<span>").text(data.actor));
@@ -62,7 +63,8 @@ $(function(){
 					data:{code:code,item:"True"},
 					success:(function(data){
 						if (data.length==0){
-							$(".list").append($("<h2>").text("服务器没有资源"));
+							$(".tiny").append($("<h2>").text("服务器没有资源"));
+							return
 						}
 						var num=list.num(code);
 						if (num==0){
@@ -78,11 +80,34 @@ $(function(){
 						 		header.setCookie("fname",$(".item-name h2").text(),1);
 						 	});
 						 	$(".tiny").append(item.clone().addClass("btn btn-default"));
-						 	$("<li>").addClass("list-group-item").append(item.clone()).appendTo($(".list .list-group"));
+						 	$("<li>").addClass("list-group-item").append($("<i>").addClass("select-box")).append(item.clone().text($(".item-name").text()+"第"+item.clone().text()+"集")).appendTo($(".list .list-group"));
+						 	
 						 });
+						list.select_click();
 						})
 					
 				});
+		},
+		select_click:function(){
+			$("i").click(function(){
+				if($(this).attr("data-click")=="all"){
+					if($(this).html()==""){
+						$("i").append($("<span>").addClass("glyphicon glyphicon-ok"));
+						return ;
+					}else{
+						$("i").empty();
+						retuen ;
+					}
+					
+				}
+				if($(this).html()==""){
+					$(this).append($("<span>").addClass("glyphicon glyphicon-ok"));
+				}else{
+					$(this).empty();
+				}
+
+				
+			});
 		}
 	};
 list.init();
