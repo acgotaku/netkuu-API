@@ -80,7 +80,7 @@ $(function(){
 						 		header.setCookie("fname",$(".item-name h2").text(),1);
 						 	});
 						 	$(".tiny").append(item.clone().addClass("btn btn-default"));
-						 	$("<li>").addClass("list-group-item").append($("<i>").addClass("select-box")).append(item.clone().text($(".item-name").text()+"第"+item.clone().text()+"集")).appendTo($(".list .list-group"));
+						 	$("<li>").addClass("list-group-item").append($("<i>").addClass("select-box")).append(item.clone().addClass("btn btn-default").text($(".item-name").text()+"第"+item.clone().text()+"集")).appendTo($(".list .list-group"));
 						 	
 						 });
 						list.select_click();
@@ -89,25 +89,86 @@ $(function(){
 				});
 		},
 		select_click:function(){
+			$("i").each(function(){
+				var val=$(this).next().attr("disabled");
+				if(val=="disabled"){
+					$(this).attr("disabled","disabled");
+				}
+			});
 			$("i").click(function(){
 				if($(this).attr("data-click")=="all"){
 					if($(this).html()==""){
-						$("i").append($("<span>").addClass("glyphicon glyphicon-ok"));
-						return ;
+						$("i").each(function(){
+							if($(this).attr("disabled")!="disabled"){
+								$(this).html($("<span>").addClass("glyphicon glyphicon-ok"));
+							}
+						});
 					}else{
 						$("i").empty();
-						retuen ;
-					}
-					
-				}
-				if($(this).html()==""){
-					$(this).append($("<span>").addClass("glyphicon glyphicon-ok"));
+					}				
 				}else{
-					$(this).empty();
-				}
-
-				
+					list.add_ok($(this));
+				}	
 			});
+			list.download_click();
+		},
+		add_ok:function(item){
+			if(item.attr("disabled")!="disabled"){
+				if(item.html()==""){
+					item.html($("<span>").addClass("glyphicon glyphicon-ok"));
+				}else{
+					item.empty();
+				}				
+			}
+		},
+		download_click:function(){
+			$("a[data-click=download]").click(function(){
+				$("i").each(function(){
+					if($(this).html()!=""){
+						var title=$(this).next().text();
+						var url=$(this).next().attr("href");
+							$.ajax({
+							type:'POST',
+							url:url,
+							dataType:'text',
+							success:(function(data){
+								var server=header.getCookie("server")
+								var down_url=data;
+								if(server!=""){
+									down_url=data.replace(/^http:\/\/.+?\//gi,server);
+								}
+								var array=data.split(".");
+								var file_type=array[array.length-1];
+								var date=new Date();
+								var json=[ { "id" : date.getTime(),
+										    "jsonrpc" : "2.0",
+										    "method" : "aria2.addUri",
+										    "params" : [ [ down_url ],
+										        { "header" : [ "User-Agent: Novasoft NetPlayer/4.0"
+										            ],
+										          "out" : title+"."+file_type
+										        }
+										      ]
+										  } ];
+								list.add_aria2(json);
+								})
+						});
+
+					}
+				});
+			});
+		},
+		add_aria2:function(json){
+			$.ajax({
+				type:'POST',
+				url:"http://localhost:6800/jsonrpc",
+				dataType:'json',
+				data:JSON.stringify(json),
+				success:function(data){
+				console.log("下载成功");
+				}
+			});
+
 		}
 	};
 list.init();

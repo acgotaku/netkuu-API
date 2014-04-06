@@ -72,6 +72,7 @@ class ServerXml:
 class Xml:
     def __init__(self,path,cache_file,url="movie.zzti.edu.cn",coding="gb18030"):
         self.url=url
+        print (url)
         self.path=path
         self.cache_file=cache_file
         self.coding=coding

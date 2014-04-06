@@ -51,6 +51,17 @@
 	line-height: 14px;
 	cursor: pointer;
 }
+.select-box[disabled]{
+	cursor: not-allowed;
+	pointer-events: none;
+	opacity: .65;
+	filter: alpha(opacity=65);
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
 .glyphicon-ok{
 	top:0;
+}
+.download{
+	float: right!important;
 }
